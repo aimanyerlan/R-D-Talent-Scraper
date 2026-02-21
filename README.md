@@ -81,6 +81,14 @@ R&D Talent Scraper — ғылым және зерттеу (Research & Developmen
 
 ## 7. Жүйе архитектурасы (жоғары деңгей)
 
+Жоба классикалық үш қабатты (3-tier) архитектураға негізделген:
+
+1. Presentation Layer (Frontend)
+2. Application Layer (Django REST API)
+3. Data Layer (PostgreSQL)
+
+Сонымен қатар асинхронды өңдеу қабаты бар (Celery Worker).
+
 ### Компоненттер:
 
 - Django REST API (backend)
@@ -90,14 +98,15 @@ R&D Talent Scraper — ғылым және зерттеу (Research & Developmen
 - Docker (контейнеризация)
 - Render (деплой)
 
-### Деректер ағыны:
+### Деректер ағыны (Data Flow)
 
-1. Жүйе HH-тан вакансияларды алады  
-2. Деректер нормализацияланады  
-3. PostgreSQL-ға сақталады  
-4. Description ішінен skills шығарылады  
-5. Vacancy ↔ Skill байланысы құрылады  
-6. API арқылы frontend-ке беріледі  
+1. Celery Worker HH API-дан вакансия алады  
+2. Вакансия сипаттамасы өңделеді  
+3. Skill dictionary арқылы skills анықталады  
+4. PostgreSQL-ға Vacancy және Skill байланысы сақталады  
+5. Пайдаланушы API арқылы деректерді сұратады  
+6. API фильтр, сұрыптау, пагинация орындайды  
+7. JSON жауап қайтарылады  
 
 ---
 
